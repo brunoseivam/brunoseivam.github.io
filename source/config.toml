@@ -1,0 +1,4 @@
+baseURL = "http://brunoseivam.github.io"
+languageCode = "en-us"
+title = "Bruno Martins"
+theme = "anatole"
