@@ -2,13 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Bruno Martins</title>
-    <link>https://brunoseivam.github.io/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on Bruno Martins</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Wed, 29 Apr 2015 03:53:10 +0000</lastBuildDate>
     
-	<atom:link href="https://brunoseivam.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ramblings</title>
+      <link>/categories/ramblings/</link>
+      <pubDate>Wed, 29 Apr 2015 03:53:10 +0000</pubDate>
+      
+      <guid>/categories/ramblings/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>/categories/linux/</link>
+      <pubDate>Mon, 07 Apr 2014 20:06:31 +0000</pubDate>
+      
+      <guid>/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>/categories/python/</link>
+      <pubDate>Mon, 07 Apr 2014 20:06:31 +0000</pubDate>
+      
+      <guid>/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>beaglebone</title>
+      <link>/categories/beaglebone/</link>
+      <pubDate>Tue, 28 Jan 2014 21:35:48 +0000</pubDate>
+      
+      <guid>/categories/beaglebone/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

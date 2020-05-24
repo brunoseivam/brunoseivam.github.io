@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><html lang="en" data-theme="light">
+<head>
+    <title>  | A very simple ToDo Indicator list for Ubuntu </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.71.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="">
+    
+    <link rel="stylesheet" href="../css/style.min.9e48afe85b9bccfe2b9e49d90d71720c638e2b14394f7f6eea9e6aff4d43c756.css" integrity="sha256-nkiv6FubzP4rnknZDXFyDGOOKxQ5T39u6p5q/01Dx1Y=" type="text/css">
+    
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <base href="">
+    
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="canonical" href="../a-very-simple-todo-list-for-ubuntu/">
+    
+    
+    <script type="text/javascript" src="../js/anatole-header.min.3b96da9aecc38aaa950c7528be99cf86019b560752f7280b45b71d53f69e1367.js" integrity="sha256-O5bamuzDiqqVDHUovpnPhgGbVgdS9ygLRbcdU/aeE2c="></script>
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+        <img src="" alt="profile picture">
+        <h3 title=""><a href="../"></a></h3>
+        <div class="description">
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy;  2020 </div>
+      </div>
+    </div>
+</div><div class="main">
+            <div class="page-top animated fadeInDown">
+    
+        <ul class="nav">
+        
+        
+        </ul>
+    
+    <div class="themeswitcher">
+        <a class="theme-switch" title="Switch Theme">
+            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>A very simple ToDo Indicator list for Ubuntu
+        </h3>
+        
+        </div>
+
+    <p><img src="img/todo-appindicator.jpg" alt="Screenshot of the running app"></p>
+<p>Pretty, huh? The icon is from the <a href="http://openiconlibrary.sourceforge.net/gallery2/?./Icons/actions/dialog-ok-apply-4.png" title="Yay! Icons!">Open Icon Library</a>.</p>
+<p>(You can synchronize your ToDo list over multiple PC&rsquo;s just placing the database in a Dropbox folder)</p>
+<h1 id="the-motivation">The Motivation</h1>
+<p>I have to admit: I&rsquo;m not an organized person. Over the past few months I have kind of forced myself to write down everything I was doing and all the thoughts I was having, for future (and present) reference. A natural pattern that emerged was that I always had a ToDo list on one of the margins of the most recent notebook page. As I wrote more things on the notebook, I ended up copying the ToDo list to a more recent page.</p>
+<p>So I decided to build a simple and easily accessible ToDo list.</p>
+<p>I wanted the app to be easily accessible and not get in the way of other things. Therefore, I decided to build it as an Ubuntu Application Indicator (those pesky icons that stand next to the system clock).</p>
+<p>I wrote this app using Python; the code is available on <a href="https://github.com/brunoseivam/todoindicator" title="ToDo Indicator on Github!">GitHub</a>.</p>
+<h1 id="the-specs">The Specs</h1>
+<p>Ideally I wanted to have a more dynamic Indicator, allowing me to add, remove and check items using the dropdown menu directly. However, the appindicator library for Python doesn&rsquo;t allow me to do that, as I can&rsquo;t embed arbitrary GTK Widgets inside a GTK MenuItem.</p>
+<p>So, the menu was designed as follows:</p>
+<ul>
+<li>A list of items. Each item has an indication of Done/Not Done (Unicode <a href="http://en.wikipedia.org/wiki/Checkbox#Unicode" title="Unicode checkboxes ☑">checkboxes</a>). Clicking the item toggles its Done/Not Done status;</li>
+<li>A button that allows the list of items to be changed. This button launches GEdit to edit the database;</li>
+<li>A button to close the app.</li>
+</ul>
+<h1 id="the-database">The Database</h1>
+<p>The database is composed of a single text file in the following format:</p>
+<ul>
+<li>Each line contains one item;</li>
+<li>The line starts with the string &ldquo;Yes&rdquo; or the string &ldquo;No&rdquo;, representing the Done/Not Done state;</li>
+<li>A semicolon follows;</li>
+<li>A description of the item follows.</li>
+</ul>
+<p>For example, the file below quite obviously describes two (easily accomplishable) tasks: the first one marked as Done and the second one as Not Done.</p>
+<pre><code>Yes;Write a blog post about my ToDo list app
+No;Get obnoxiously rich
+</code></pre>
+<h1 id="the-code">The Code</h1>
+<p>The code relies on three libraries: <a href="http://www.pygtk.org/" title="PyGTK">pygtk</a>, <a href="https://unity.ubuntu.com/projects/appindicators/" title="AppIndicators">appindicator</a> (with faulty documentation) and <a href="http://pyinotify.sourceforge.net/" title="PyINotify">pyinotify</a>. The first one provides an API to build the menu. The second one provides bindings to attach the menu to the system as an Indicator. The last one allows watching for changes in the &ldquo;database&rdquo;.</p>
+<p>When the application starts it loads the &ldquo;database&rdquo; file and fills the menu. If the database changes, the app reloads it and rebuild the menu. If an item is clicked, its state is toggled and the database is updated (which in turn triggers a reload).</p>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+<span class="separator"><a class="category" href="../categories/linux/">linux</a><a class="category" href="../categories/python/">python</a></span>
+
+        
+      </div>
+    </div>
+
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="../js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw="></script>
+
+
+
+
+<script type="text/javascript" src="../js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4="></script>
+
+<script type="text/javascript" src="../js/medium-zoom.min.7487768bffcc6aee437cf6a4ac7da5d2ffc61dc63b36316a14122ceb26b34c70.js" integrity="sha256-dId2i//Mau5DfPakrH2l0v/GHcY7NjFqFBIs6yazTHA="></script>
+
+<link rel="stylesheet" href="../css/medium-zoom.min.a1468f7a1cce6fe96c4b5483cb4645b85728a32b3abbd598c375a92df16230ef.css" integrity="sha256-oUaPehzOb&#43;lsS1SDy0ZFuFcooys6u9WYw3WpLfFiMO8=" type="text/css"></html></body>
+
+</html>

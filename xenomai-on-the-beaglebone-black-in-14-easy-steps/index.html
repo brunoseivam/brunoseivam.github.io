@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><html lang="en" data-theme="light">
+<head>
+    <title>  | Xenomai on the Beaglebone Black in 14 easy steps </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.71.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="">
+    
+    <link rel="stylesheet" href="../css/style.min.9e48afe85b9bccfe2b9e49d90d71720c638e2b14394f7f6eea9e6aff4d43c756.css" integrity="sha256-nkiv6FubzP4rnknZDXFyDGOOKxQ5T39u6p5q/01Dx1Y=" type="text/css">
+    
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <base href="">
+    
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="canonical" href="../xenomai-on-the-beaglebone-black-in-14-easy-steps/">
+    
+    
+    <script type="text/javascript" src="../js/anatole-header.min.3b96da9aecc38aaa950c7528be99cf86019b560752f7280b45b71d53f69e1367.js" integrity="sha256-O5bamuzDiqqVDHUovpnPhgGbVgdS9ygLRbcdU/aeE2c="></script>
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+        <img src="" alt="profile picture">
+        <h3 title=""><a href="../"></a></h3>
+        <div class="description">
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy;  2020 </div>
+      </div>
+    </div>
+</div><div class="main">
+            <div class="page-top animated fadeInDown">
+    
+        <ul class="nav">
+        
+        
+        </ul>
+    
+    <div class="themeswitcher">
+        <a class="theme-switch" title="Switch Theme">
+            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>Xenomai on the Beaglebone Black in 14 easy steps
+        </h3>
+        
+        </div>
+
+    <h5 id="edit-mark-wrote-an-updated-guide-herehttpelinuxorgebc_xenomai-new-instructions"><strong>EDIT: Mark wrote an updated guide <a href="http://elinux.org/EBC_Xenomai" title="New instructions!">here</a>.</strong></h5>
+<p>The <a href="http://beagleboard.org/products/beaglebone%20black" title="BeagleBone Black">BeagleBone Black</a> is an amazingly cheap and powerful development platform that is being used by many people in a lot of projects. That was intentionally vague, because I know that if you ended up here you already know what a BeagleBone Black is.</p>
+<p>In this post I&rsquo;ll explain how I got <a href="http://www.xenomai.org/" title="Xenomai">Xenomai</a> to run on my BeagleBone.</p>
+<p>First of all I tried <a href="https://github.com/DrunkenInfant/beaglebone-xenomai" title="Failed instructions">these</a> instructions, but couldn&rsquo;t get past the kernel compilation step. I believe that this is due to the instructions being six months old, which are like two and a half centuries in computer time. So I continued searching and found a <a href="http://yuina822.blogspot.com.br/" title="Japanese blog">post in a Japanese blog</a>. Using <del>my fluent Japanese</del> Google Translator I could understand what was going on and could successfully reproduce the steps and get Xenomai up and running (big thanks to the author!). Here I&rsquo;ll reproduce the steps. I&rsquo;m assuming that you are on a computer running Ubuntu (like mine) and are familiar with the command line.</p>
+<h1 id="getting-the-tools">Getting the tools</h1>
+<p><strong>Step 0:</strong> Get all the tools that will be needed (cross-compiler and dev libraries).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install build-essential libncurses5<span style="color:#f92672">{</span>,-dev<span style="color:#f92672">}</span> gcc-arm-linux-gnueabi
+</code></pre></div><h1 id="building-the-kernel">Building the Kernel</h1>
+<p><strong>Step 1:</strong> First of all, make a directory to hold all of our development files. I&rsquo;ll call mine <code>bbb</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir bbb
+cd bbb
+export BBB<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>
+</code></pre></div><p><strong>Step 2:</strong> Get the Linux kernel for the BeagleBone and the Xenomai sources. This might take a while.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone http://github.com/beagleboard/kernel.git beagle-kernel
+wget http://download.gna.org/xenomai/stable/xenomai-2.6.3.tar.bz2
+tar xvjf xenomai-2.6.3.tar.bz2
+</code></pre></div><p><strong>Step 3:</strong> Checkout kernel 3.8 version branch. Apply BeagleBone&rsquo;s patches.</p>
+<p><em>Note: In this step I revert to a specific commit because newer ones are known to cause problems.</em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd beagle-kernel
+git checkout origin/3.8 -b 3.8
+git reset --hard eae56c3
+./patch.sh
+</code></pre></div><p><strong>Step 4:</strong> Get a firmware that the kernel config will need (I&rsquo;m not sure whether this firmware is really needed).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">wget <span style="color:#e6db74">&#34;http://arago-project.org/git/projects/?p=am33x-cm3.git;a=blob_plain;f=bin/am335x-pm-firmware.bin;hb=HEAD&#34;</span> -O kernel/firmware/am335x-pm-firmware.bin
+</code></pre></div><p><strong>Step 5:</strong> Copy the BeagleBone default config as the running config.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp configs/beaglebone kernel/.config
+</code></pre></div><p><strong>Step 6:</strong> Apply I-pipe patches to the BeagleBone kernel.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd kernel
+patch -p1 &amp;lt; ../../xenomai-2.6.3/ksrc/arch/arm/patches/beaglebone/ipipe-core-3.8.13-beaglebone-pre.patch
+patch -p1 &amp;lt; ../../xenomai-2.6.3/ksrc/arch/arm/patches/ipipe-core-3.8.13-arm-3.patch
+patch -p1 &amp;lt; ../../xenomai-2.6.3/ksrc/arch/arm/patches/beaglebone/ipipe-core-3.8.13-beaglebone-post.patch
+</code></pre></div><p><strong>Step 7:</strong> Run the Xenomai <code>prepare-kernel</code>  script for the BeagleBone kernel.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ../../xenomai-2.6.3/scripts
+./prepare-kernel.sh --arch<span style="color:#f92672">=</span>arm --linux<span style="color:#f92672">=</span>../../beagle-kernel/kernel
+</code></pre></div><p><strong>Step 8:</strong> Configure the kernel to be built.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ../../beagle-kernel/kernel
+make ARCH<span style="color:#f92672">=</span>arm menuconfig
+</code></pre></div><p>Under <code>CPU Power Management ---&gt;  CPU Frequency scaling</code>, disable <code>[ ] CPU Frequency scaling</code>. <em>(Note: Don&rsquo;t know if it&rsquo;s better to leave it enabled, read the comments!)</em></p>
+<p>Under <code>Real-time sub-system  ---&gt; Drivers ---&gt; Testing drivers</code>, enable everything.</p>
+<p><strong>Step 9:</strong> Compile the kernel.</p>
+<p><em>Note: I chose 16 to the <!-- raw HTML omitted -->-j<!-- raw HTML omitted -->  option, because my computer has 8 cores. Choose a value appropriate to your computer. I read somewhere that 2 times the number of cores is a good number.</em></p>
+<p><em>Note: If there were errors in the compilation, the messages will probably be lost among all other output. To see them, simply run the command again.</em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">make -j16 ARCH<span style="color:#f92672">=</span>arm CROSS_COMPILE<span style="color:#f92672">=</span>arm-linux-gnueabi- LOADADDR<span style="color:#f92672">=</span>0x80008000 uImage dtbs modules
+</code></pre></div><h1 id="preparing-an-sd-card"><strong>Preparing an SD Card</strong></h1>
+<p>Now let&rsquo;s get an SD Card ready with the Angstrom distribution and our kernel. If you want to use this kernel with the distribution on the eMMC memory, just put it in the appropriate place.</p>
+<p><strong>Step 10:</strong> Download and copy the default Angstrom distribution to your SD Card. Replace <code>/dev/sdX</code>  with the path to your SD Card. <code>sudo fdisk -l</code>  is your friend. <em>Note: I used a SanDisk 4GB SD Card.</em></p>
+<p><strong>CAUTION: YOU WILL LOSE ALL YOUR PREVIOUS DATA ON THE DEVICE <code>/dev/sdX</code> !</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd $BBB
+wget https://s3.amazonaws.com/angstrom/demo/beaglebone/Angstrom-Cloud9-IDE-GNOME-eglibc-ipk-v2012.12-beaglebone-2013.06.20.img.xz
+sudo -s
+xz -dkc Angstrom*img.xz &amp;gt; /dev/sdX
+exit
+</code></pre></div><p><strong>Step 11:</strong> Mount the Angstrom partition. Copy kernel and kernel modules (thanks for your comment, Jurg Lehni!), Xenomai modules and source folder to that partition. Replace <code>/dev/sdX2</code> with your actual path to the partition.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir sd
+sudo mount /dev/sdX2 sd
+sudo cp beagle-kernel/kernel/arch/arm/boot/uImage sd/boot/uImage-3.8.13
+cd beagle-kernel/kernel
+sudo make ARCH<span style="color:#f92672">=</span>arm CROSS_COMPILE<span style="color:#f92672">=</span>arm-linux-gnueabi- INSTALL_MOD_PATH<span style="color:#f92672">=</span>$BBB/sd modules_install
+cd -
+mkdir sd/home/root/xeno_drivers
+cp beagle-kernel/kernel/drivers/xenomai/testing/*.ko sd/home/root/xeno_drivers/
+cp -r xenomai-2.6.3 sd/home/root
+sudo umount sd
+</code></pre></div><h1 id="testing">Testing</h1>
+<p>Now put the SD card on the BeagleBone, boot it, ssh into it and test Xenomai.</p>
+<p><strong>Step 12:</strong> Configure the date and compile Xenomai</p>
+<p><em>Note: an example for the date command would be</em> <code>date -s &quot;21 May 2014 13:25 GMT-3&quot;</code> </p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">date -s <span style="color:#e6db74">&#34;DD MMM YYYY HH:MM TZ&#34;</span>
+cd ~/xenomai-2.6.3
+./configure CFLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-march=armv7-a -mfpu=vfp3&#34;</span> LDFLAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-march=armv7-a -mfpu=vfp3&#34;</span>
+make
+make install
+</code></pre></div><p><strong>Step 13:</strong> Load the testing driver</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cd ~/xeno_drivers
+insmod xeno_klat.ko
+</code></pre></div><p><strong>Step 14:</strong> Run some tests!</p>
+<p>User-mode latency:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># /usr/xenomai/bin/latency</span>
+<span style="color:#f92672">==</span> Sampling period: <span style="color:#ae81ff">1000</span> us
+<span style="color:#f92672">==</span> Test mode: periodic user-mode task
+<span style="color:#f92672">==</span> All results in microseconds
+warming up...
+RTT|  00:00:01  <span style="color:#f92672">(</span>periodic user-mode task, <span style="color:#ae81ff">1000</span> us period, priority 99<span style="color:#f92672">)</span>
+RTH|----lat min|----lat avg|----lat max|-overrun|---msw|---lat best|--lat worst
+RTD|      6.916|      7.083|     11.708|       0|     0|      6.916|     11.708
+RTD|      6.874|      8.041|     22.708|       0|     0|      6.874|     22.708
+RTD|      8.749|      9.041|     28.333|       0|     0|      6.874|     28.333
+RTD|      8.791|      9.041|     22.583|       0|     0|      6.874|     28.333
+RTD|      8.791|      9.083|     26.499|       0|     0|      6.874|     28.333
+RTD|      8.791|      9.041|     24.541|       0|     0|      6.874|     28.333
+RTD|      8.708|      8.999|     25.208|       0|     0|      6.874|     28.333
+RTD|      8.833|      9.041|     24.041|       0|     0|      6.874|     28.333
+RTD|      8.749|      9.041|     26.291|       0|     0|      6.874|     28.333
+RTD|      8.791|      8.999|     22.416|       0|     0|      6.874|     28.333
+^C---|-----------|-----------|-----------|--------|------|-------------------------
+RTS|      6.874|      8.708|     28.333|       0|     0|    00:00:10/00:00:10
+</code></pre></div><p>In-kernel Latency:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># /usr/xenomai/bin/klatency</span>
+<span style="color:#f92672">==</span> Sampling period: <span style="color:#ae81ff">100</span> us
+<span style="color:#f92672">==</span> Test mode: in-kernel periodic task
+<span style="color:#f92672">==</span> All results in microseconds
+warming up...
+RTT|  00:00:00  <span style="color:#f92672">(</span>in-kernel periodic task, <span style="color:#ae81ff">100</span> us period, priority 99<span style="color:#f92672">)</span>
+RTH|-----lat min|-----lat avg|-----lat max|-overrun|----lat best|---lat worst
+RTD|      -3.250|      -0.846|       3.791|       0|      -4.250|       5.167
+RTD|      -0.917|      -0.800|       4.041|       0|      -4.250|       5.167
+RTD|      -0.917|      -0.801|       4.333|       0|      -4.250|       5.167
+RTD|      -1.084|      -0.806|       1.499|       0|      -4.250|       5.167
+RTD|      -1.043|      -0.788|       3.999|       0|      -4.250|       5.167
+RTD|      -3.335|      -0.794|       3.624|       0|      -4.250|       5.167
+RTD|      -0.918|      -0.744|       4.707|       0|      -4.250|       5.167
+RTD|      -0.919|      -0.803|       4.581|       0|      -4.250|       5.167
+RTD|      -0.877|      -0.797|       4.581|       0|      -4.250|       5.167
+RTD|      -0.919|      -0.804|       3.373|       0|      -4.250|       5.167
+RTD|      -0.919|      -0.802|       4.622|       0|      -4.250|       5.167
+RTD|      -0.920|      -0.804|       3.372|       0|      -4.250|       5.167
+^CRTD|      -0.920|      -0.801|       3.622|       0|      -4.250|       5.167
+---|------------|------------|------------|--------|-------------------------
+RTS|      -4.250|      -0.744|       5.167|       0|    00:00:06/00:00:06
+</code></pre></div><p>Poke around:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># cat /proc/xenomai/version</span>
+2.6.3
+<span style="color:#75715e"># cat /proc/ipipe/version</span>
+<span style="color:#ae81ff">3</span>
+</code></pre></div><p>Change parameters:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># cat /proc/xenomai/latency</span>
+<span style="color:#ae81ff">4999</span>
+<span style="color:#75715e"># echo &#34;0&#34; &amp;gt;&amp;gt; /proc/xenomai/latency</span>
+<span style="color:#75715e"># cat /proc/xenomai/latency</span>
+<span style="color:#ae81ff">0</span>
+<span style="color:#75715e"># rmmod xeno_lat</span>
+<span style="color:#75715e"># cd ~/xeno_drivers</span>
+<span style="color:#75715e"># insmod xeno_klat.ko</span>
+<span style="color:#75715e"># /usr/xenomai/bin/klatency</span>
+<span style="color:#f92672">==</span> Sampling period: <span style="color:#ae81ff">100</span> us
+<span style="color:#f92672">==</span> Test mode: in-kernel periodic task
+<span style="color:#f92672">==</span> All results in microseconds
+warming up...
+RTT|  00:00:01  <span style="color:#f92672">(</span>in-kernel periodic task, <span style="color:#ae81ff">100</span> us period, priority 99<span style="color:#f92672">)</span>
+RTH|-----lat min|-----lat avg|-----lat max|-overrun|----lat best|---lat worst
+RTD|       4.041|       4.190|       9.958|       0|       4.041|      10.166
+RTD|       3.582|       4.205|      10.374|       0|       3.582|      10.374
+RTD|       4.082|       4.191|       8.957|       0|       3.582|      10.374
+RTD|       4.082|       4.182|       9.665|       0|       3.582|      10.374
+RTD|       4.082|       4.197|       8.373|       0|       3.582|      10.374
+RTD|       3.623|       4.193|       8.457|       0|       3.582|      10.374
+RTD|       3.915|       4.184|       9.040|       0|       3.582|      10.374
+RTD|       4.081|       4.184|       8.206|       0|       3.582|      10.374
+RTD|       0.456|       4.180|       8.664|       0|       0.456|      10.374
+RTD|       0.455|       4.196|       8.831|       0|       0.455|      10.374
+RTD|       4.080|       4.182|       8.997|       0|       0.455|      10.374
+RTD|       4.080|       4.197|       9.622|       0|       0.455|      10.374
+RTD|       4.038|       4.187|       9.913|       0|       0.455|      10.374
+RTD|       4.079|       4.194|       8.788|       0|       0.455|      10.374
+RTD|       4.079|       4.181|       8.538|       0|       0.455|      10.374
+RTD|       4.079|       4.175|       8.579|       0|       0.455|      10.374
+^CRTD|       0.704|       4.195|       9.079|       0|       0.455|      10.374
+---|------------|------------|------------|--------|-------------------------
+RTS|       0.455|       3.967|      10.374|       0|    00:00:17/00:00:17
+</code></pre></div><p>Great, huh? Now go develop something real time =)</p>
+<p>{{ template &ldquo;_internal/disqus.html&rdquo; . }}</p>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+<span class="separator"><a class="category" href="../categories/beaglebone/">beaglebone</a><a class="category" href="../categories/linux/">linux</a></span>
+
+        
+      </div>
+    </div>
+
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="../js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw="></script>
+
+
+
+
+<script type="text/javascript" src="../js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4="></script>
+
+<script type="text/javascript" src="../js/medium-zoom.min.7487768bffcc6aee437cf6a4ac7da5d2ffc61dc63b36316a14122ceb26b34c70.js" integrity="sha256-dId2i//Mau5DfPakrH2l0v/GHcY7NjFqFBIs6yazTHA="></script>
+
+<link rel="stylesheet" href="../css/medium-zoom.min.a1468f7a1cce6fe96c4b5483cb4645b85728a32b3abbd598c375a92df16230ef.css" integrity="sha256-oUaPehzOb&#43;lsS1SDy0ZFuFcooys6u9WYw3WpLfFiMO8=" type="text/css"></html></body>
+
+</html>
