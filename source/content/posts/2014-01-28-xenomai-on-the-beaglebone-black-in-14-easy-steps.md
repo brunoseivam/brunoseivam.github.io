@@ -3,6 +3,7 @@ title: Xenomai on the Beaglebone Black in 14 easy steps
 author: Bruno Martins
 date: 2014-01-28T21:35:48+00:00
 url: /xenomai-on-the-beaglebone-black-in-14-easy-steps/
+comments: true
 dsq_thread_id:
   - 2696647300
 categories:
@@ -261,4 +262,4 @@ RTS|       0.455|       3.967|      10.374|       0|    00:00:17/00:00:17
 
 Great, huh? Now go develop something real time =)
 
-{{ template "_internal/disqus.html" . }}
+
