@@ -35,6 +35,10 @@ Go to http://localhost:1313 to see the website.
 
     hugo -D --destination ../
 
+# Configure static folder for images etc
 
+Add the following to `config.toml`:
+
+    staticDir = "static"
 
 

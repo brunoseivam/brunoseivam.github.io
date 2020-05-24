@@ -1,4 +1,6 @@
-baseURL = "https://brunoseivam.github.io"
+relativeURLs = true
 languageCode = "en-us"
 title = "Bruno Martins"
 theme = "anatole"
+staticDir = "static"
+disqusShortname = "brunosmartins"
