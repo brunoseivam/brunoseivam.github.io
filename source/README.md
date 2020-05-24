@@ -41,4 +41,7 @@ Add the following to `config.toml`:
 
     staticDir = "static"
 
+# Moving Disqus threads
 
+Go here https://brunosmartins.disqus.com/admin/discussions/
+Manually change the Link column
