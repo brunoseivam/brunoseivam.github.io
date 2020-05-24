@@ -1,6 +1,6 @@
 relativeURLs = true
 languageCode = "en-us"
 title = "Bruno Martins"
-theme = "anatole"
+theme = "beautifulhugo"
 staticDir = "static"
 disqusShortname = "brunosmartins"
