@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>beaglebone on Bruno Martins</title>
-    <link>/categories/beaglebone/</link>
+    <link>https://brunoseivam.github.io/categories/beaglebone/</link>
     <description>Recent content in beaglebone on Bruno Martins</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 28 Jan 2014 21:35:48 +0000</lastBuildDate>
     
-	<atom:link href="/categories/beaglebone/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://brunoseivam.github.io/categories/beaglebone/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Xenomai on the Beaglebone Black in 14 easy steps</title>
-      <link>/xenomai-on-the-beaglebone-black-in-14-easy-steps/</link>
+      <link>https://brunoseivam.github.io/xenomai-on-the-beaglebone-black-in-14-easy-steps/</link>
       <pubDate>Tue, 28 Jan 2014 21:35:48 +0000</pubDate>
       
-      <guid>/xenomai-on-the-beaglebone-black-in-14-easy-steps/</guid>
+      <guid>https://brunoseivam.github.io/xenomai-on-the-beaglebone-black-in-14-easy-steps/</guid>
       <description>EDIT: Mark wrote an updated guide here. The BeagleBone Black is an amazingly cheap and powerful development platform that is being used by many people in a lot of projects. That was intentionally vague, because I know that if you ended up here you already know what a BeagleBone Black is.
 In this post I&amp;rsquo;ll explain how I got Xenomai to run on my BeagleBone.
 First of all I tried these instructions, but couldn&amp;rsquo;t get past the kernel compilation step.</description>

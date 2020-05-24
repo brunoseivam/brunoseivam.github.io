@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Bruno Martins</title>
-    <link>/posts/</link>
+    <link>https://brunoseivam.github.io/posts/</link>
     <description>Recent content in Posts on Bruno Martins</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 29 Apr 2015 03:53:10 +0000</lastBuildDate>
     
-	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://brunoseivam.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Do you speak robot?</title>
-      <link>/do-you-speak-robot/</link>
+      <link>https://brunoseivam.github.io/do-you-speak-robot/</link>
       <pubDate>Wed, 29 Apr 2015 03:53:10 +0000</pubDate>
       
-      <guid>/do-you-speak-robot/</guid>
+      <guid>https://brunoseivam.github.io/do-you-speak-robot/</guid>
       <description>Our future — a lot of movies and written pieces say — will be filled with robots. Sometimes they are portrayed as caring, helpful and generous, sometimes they are vicious things that aim to destroy humanity for the plague we are. In whatever color we paint them, they are always sentient or near sentient and have moral values imbued in their programming. And, remarkably, they are almost always portrayed in the future.</description>
     </item>
     
     <item>
       <title>A very simple ToDo Indicator list for Ubuntu</title>
-      <link>/a-very-simple-todo-list-for-ubuntu/</link>
+      <link>https://brunoseivam.github.io/a-very-simple-todo-list-for-ubuntu/</link>
       <pubDate>Mon, 07 Apr 2014 20:06:31 +0000</pubDate>
       
-      <guid>/a-very-simple-todo-list-for-ubuntu/</guid>
+      <guid>https://brunoseivam.github.io/a-very-simple-todo-list-for-ubuntu/</guid>
       <description>Pretty, huh? The icon is from the Open Icon Library.
 (You can synchronize your ToDo list over multiple PC&amp;rsquo;s just placing the database in a Dropbox folder)
 The Motivation I have to admit: I&amp;rsquo;m not an organized person. Over the past few months I have kind of forced myself to write down everything I was doing and all the thoughts I was having, for future (and present) reference. A natural pattern that emerged was that I always had a ToDo list on one of the margins of the most recent notebook page.</description>
@@ -33,10 +33,10 @@ The Motivation I have to admit: I&amp;rsquo;m not an organized person. Over the 
     
     <item>
       <title>Xenomai on the Beaglebone Black in 14 easy steps</title>
-      <link>/xenomai-on-the-beaglebone-black-in-14-easy-steps/</link>
+      <link>https://brunoseivam.github.io/xenomai-on-the-beaglebone-black-in-14-easy-steps/</link>
       <pubDate>Tue, 28 Jan 2014 21:35:48 +0000</pubDate>
       
-      <guid>/xenomai-on-the-beaglebone-black-in-14-easy-steps/</guid>
+      <guid>https://brunoseivam.github.io/xenomai-on-the-beaglebone-black-in-14-easy-steps/</guid>
       <description>EDIT: Mark wrote an updated guide here. The BeagleBone Black is an amazingly cheap and powerful development platform that is being used by many people in a lot of projects. That was intentionally vague, because I know that if you ended up here you already know what a BeagleBone Black is.
 In this post I&amp;rsquo;ll explain how I got Xenomai to run on my BeagleBone.
 First of all I tried these instructions, but couldn&amp;rsquo;t get past the kernel compilation step.</description>

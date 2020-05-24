@@ -1,4 +1,5 @@
 relativeURLs = true
+baseURL = "https://brunoseivam.github.io"
 languageCode = "en-us"
 title = "Bruno Martins"
 theme = "beautifulhugo"
